@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "build": "cd \"EHS Avva Inventory/Avva Inventory/InventoryManagementFE\" && npm install && npm run build"
+    }
+}

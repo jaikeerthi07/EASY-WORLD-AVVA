@@ -1,17 +1,11 @@
 {
-    "builds": [
+    "buildCommand": "npm run build",
+    "outputDirectory": "EHS Avva Inventory/Avva Inventory/InventoryManagementFE/build",
+    "framework": null,
+    "rewrites": [
         {
-            "src": "EHS Avva Inventory/Avva Inventory/InventoryManagementFE/package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "build"
-            }
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/EHS Avva Inventory/Avva Inventory/InventoryManagementFE/$1"
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
