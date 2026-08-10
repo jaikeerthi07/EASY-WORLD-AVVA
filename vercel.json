@@ -1,0 +1,5 @@
+{
+    "buildCommand": "npm run build",
+    "outputDirectory": "EHS Avva Inventory/Avva Inventory/InventoryManagementFE/build",
+    "framework": "create-react-app"
+}
