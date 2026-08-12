@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaShieldAlt, FaInfoCircle, FaCheckCircle, FaLock, FaEye, FaSave, FaSyncAlt, FaTrashAlt, FaUserShield } from "react-icons/fa";
+import { API_BASE_URL } from '../config';
 
 const AccessControl = () => {
   const [userTypeName, setUserTypeName] = useState("");
@@ -30,7 +31,7 @@ const AccessControl = () => {
 
   const fetchUserTypes = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/user-types");
+      const response = await axios.get(`${API_BASE_URL}/api/user-types`);
       setUserTypes(response.data);
     } catch (error) {
       console.error("Error fetching user types:", error);
@@ -91,7 +92,7 @@ const AccessControl = () => {
 
     setIsSaving(true);
     try {
-      await axios.post("http://localhost:5000/api/user-types", {
+      await axios.post(`${API_BASE_URL}/api/user-types`, {
         name: userTypeName,
         base_template: baseRole,
         permissions: userPermissions
@@ -113,7 +114,7 @@ const AccessControl = () => {
     if (!window.confirm("Are you sure you want to delete this user type?")) return;
     
     try {
-      await axios.delete(`http://localhost:5000/api/user-types/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/user-types/${id}`);
       fetchUserTypes();
     } catch (error) {
       alert("Failed to delete user type");

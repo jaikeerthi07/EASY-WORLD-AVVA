@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { 
+import { API_BASE_URL } from '../config';
   Search, 
   Eye, 
   Printer, 
@@ -67,7 +68,7 @@ const Warranty = () => {
   const [companies, setCompanies] = useState([]);
   const [showCompanySelector, setShowCompanySelector] = useState(false);
 
-  const API_BASE_URL = 'http://localhost:5000/api';
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Create axios instance with credentials
   const api = axios.create({

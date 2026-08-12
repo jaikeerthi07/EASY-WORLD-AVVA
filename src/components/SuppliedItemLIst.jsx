@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const ItemsListPage = () => {
   // State for items
@@ -27,7 +28,7 @@ const ItemsListPage = () => {
   const [exportLoading, setExportLoading] = useState(false);
   
   // Base URL for API
-  const BASE_URL = 'http://localhost:5000';
+  const BASE_URL = `${API_BASE_URL}`;
 
   // Get current date for defaults
   const currentDate = new Date();

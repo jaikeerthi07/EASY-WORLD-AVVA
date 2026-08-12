@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const PaymentTracking = () => {
   // State for suppliers data
@@ -25,7 +26,7 @@ const PaymentTracking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   
-  const BASE_URL = 'http://localhost:5000';
+  const BASE_URL = `${API_BASE_URL}`;
 
   // Check authentication
   useEffect(() => {

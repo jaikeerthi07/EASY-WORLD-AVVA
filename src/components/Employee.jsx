@@ -1,5 +1,6 @@
 // EmployeeManager.js - Updated component with password field
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const EmployeeManager = () => {
   // State for employee list
@@ -61,7 +62,7 @@ const EmployeeManager = () => {
     pan_attachment: null
   });
 
-  const API_BASE_URL = 'http://localhost:5000/api';
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Fetch all employees, user types, and companies on component mount
   useEffect(() => {

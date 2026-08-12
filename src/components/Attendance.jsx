@@ -3,6 +3,7 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import { Html5Qrcode, Html5QrcodeSupportedFormats } from "html5-qrcode";
 import { 
+import { API_BASE_URL } from '../config';
   FaBarcode, 
   FaCheckCircle, 
   FaTimesCircle, 
@@ -20,7 +21,7 @@ import {
   FaUserTie
 } from "react-icons/fa";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = `${API_BASE_URL}/api`;
 
 export default function Attendance() {
   const [activeTab, setActiveTab] = useState("scanner"); // scanner, dashboard, history, reports

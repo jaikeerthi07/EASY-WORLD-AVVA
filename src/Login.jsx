@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import logo from "./assets/logo.jpeg";
+import { API_BASE_URL } from './config';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Login = () => {
     try {
       // First try employee login
       console.log("Attempting employee login...");
-      const employeeResponse = await fetch("http://localhost:5000/api/auth/login", {
+      const employeeResponse = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ const Login = () => {
 
       // If employee login fails, try the old login endpoint
       console.log("Employee login failed, trying old login endpoint...");
-      const oldResponse = await fetch("http://localhost:5000/api/login", {
+      const oldResponse = await fetch(`${API_BASE_URL}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

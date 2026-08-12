@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import {
+import { API_BASE_URL } from '../config';
   FaMoneyBillWave,
   FaFileExcel,
   FaPrint,
@@ -13,7 +14,7 @@ import {
   FaRegFileAlt
 } from "react-icons/fa";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = `${API_BASE_URL}/api`;
 
 export default function Salary() {
   // Shared Data States

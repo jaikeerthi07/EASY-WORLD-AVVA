@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const SupplierPage = () => {
   // State for current step (1: Supplier Details, 2: Add Items)
@@ -61,7 +62,7 @@ const SupplierPage = () => {
   const [searchField, setSearchField] = useState('all');
 
   // Base URL for API
-  const BASE_URL = 'http://localhost:5000';
+  const BASE_URL = `${API_BASE_URL}`;
 
   // Check authentication status on mount
   useEffect(() => {

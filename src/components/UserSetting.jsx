@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaSave, FaSyncAlt, FaShieldAlt, FaUserCog, FaPlus, FaTrashAlt, FaEdit, FaTimes } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from '../config';
 
 const ROLE_TEMPLATES = {
   admin: [
@@ -42,7 +43,7 @@ const UserSetting = () => {
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
 
-  const API_BASE = "http://localhost:5000/api";
+  const API_BASE = `${API_BASE_URL}/api`;
 
   const fetchInitialData = async () => {
     setLoading(true);

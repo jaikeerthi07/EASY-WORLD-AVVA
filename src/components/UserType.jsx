@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const UserTypeManager = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const UserTypeManager = () => {
   const [error, setError] = useState('');
 
   // API base URL - adjust according to your backend
-  const API_BASE_URL = 'http://localhost:5000/api';
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Fetch all user types on component mount
   useEffect(() => {

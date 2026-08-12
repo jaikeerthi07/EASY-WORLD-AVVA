@@ -52,8 +52,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
+import { API_BASE_URL } from '../config';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || `${API_BASE_URL}`;
 
 const RecentBills = () => {
   const theme = useTheme();

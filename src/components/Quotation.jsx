@@ -4,11 +4,12 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { API_BASE_URL } from '../config';
 
 const QuotationPage = () => {
   // Create axios instance with credentials
   const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: `${API_BASE_URL}/api`,
     withCredentials: true,
     headers: {
       'Content-Type': 'application/json'

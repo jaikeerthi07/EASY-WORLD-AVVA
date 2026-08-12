@@ -6,9 +6,15 @@ from datetime import timedelta
 pymysql.install_as_MySQLdb()
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:jaikeerthi07a@localhost/m3cars'
+    # Use DATABASE_URL if available, else fallback to local MySQL
+    database_url = os.environ.get('DATABASE_URL', 'mysql+pymysql://root:jaikeerthi07a@localhost/m3cars')
+    # Fix postgres:// to postgresql:// for SQLAlchemy compatibility in Render
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+        
+    SQLALCHEMY_DATABASE_URI = database_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'inventory-management-secret-key-2026'
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'inventory-management-secret-key-2026')
 
     # File upload configuration
     UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')

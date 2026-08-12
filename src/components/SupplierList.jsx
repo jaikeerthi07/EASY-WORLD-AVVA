@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const SupplierDuplicatePage = () => {
   // State for suppliers list
@@ -27,7 +28,7 @@ const SupplierDuplicatePage = () => {
   const [itemsPerPage] = useState(10);
 
   // Base URL for API
-  const BASE_URL = 'http://localhost:5000';
+  const BASE_URL = `${API_BASE_URL}`;
 
   // Check authentication status on mount
   useEffect(() => {

@@ -39,10 +39,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { format } from 'date-fns';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 // Create axios instance with credentials
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: `${API_BASE_URL}/api`,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
@@ -639,7 +640,7 @@ const ServiceBills = () => {
               <Button onClick={() => setOpenDialog(false)}>Close</Button>
               <Button
                 variant="contained"
-                onClick={() => window.open(`http://localhost:5000/api/service-bills/${selectedBill.bill?.id}/pdf`, '_blank')}
+                onClick={() => window.open(`${API_BASE_URL}/api/service-bills/${selectedBill.bill?.id}/pdf`, '_blank')}
                 disabled={!selectedBill.bill?.id}
               >
                 Download PDF

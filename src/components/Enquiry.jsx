@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
+import { API_BASE_URL } from '../config';
   FaUserPlus,
   FaBell,
   FaPhone,
@@ -15,7 +16,7 @@ import {
   FaBan,
 } from "react-icons/fa";
 
-const API = "http://localhost:5000/api";
+const API = `${API_BASE_URL}/api`;
 
 const STATUS_COLORS = {
   Pending: { bg: "#fbbf24", text: "#000" },

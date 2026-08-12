@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { API_BASE_URL } from '../config';
 
 const fmt = (n) => {
   if (n === null) return "∞";
@@ -19,7 +20,7 @@ const DiscountPage = () => {
   const inputRefs = useRef({});
 
   // API Base URL - change this to your backend URL
-  const API_BASE_URL = 'http://localhost:5000/api';
+  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Fetch ranges from backend on component mount
   useEffect(() => {
