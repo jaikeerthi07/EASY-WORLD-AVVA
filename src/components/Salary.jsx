@@ -57,7 +57,7 @@ export default function Salary() {
 
   const fetchEmployees = async () => {
     try {
-      const res = await api.get("/employees");
+      const res = await api.get("/api/employees");
       const data = Array.isArray(res.data) ? res.data : (res.data.employees || []);
       setEmployees(data);
     } catch (err) {
@@ -74,7 +74,8 @@ export default function Salary() {
       });
       if (selectedEmployee) params.append("employee_id", selectedEmployee);
 
-      const res = await api.get(`/salary/calculate?${params.toString()}`);
+      // ADDED /api prefix
+      const res = await api.get(`/api/salary/calculate?${params.toString()}`);
       setSalaryReports(res.data.reports || []);
     } catch (err) {
       console.error("Error calculating salary:", err);
@@ -86,7 +87,8 @@ export default function Salary() {
 
   const handleViewPayslip = async (empId) => {
     try {
-      const res = await api.get(`/salary/payslip?employee_id=${empId}&year=${selectedYear}&month=${selectedMonth}`);
+      // ADDED /api prefix
+      const res = await api.get(`/api/salary/payslip?employee_id=${empId}&year=${selectedYear}&month=${selectedMonth}`);
       setSelectedPayslip(res.data);
       setShowPayslipModal(true);
     } catch (err) {
