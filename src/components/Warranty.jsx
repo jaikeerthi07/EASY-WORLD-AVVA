@@ -68,7 +68,6 @@ const Warranty = () => {
   const [companies, setCompanies] = useState([]);
   const [showCompanySelector, setShowCompanySelector] = useState(false);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Create axios instance with credentials
   const api = axios.create({

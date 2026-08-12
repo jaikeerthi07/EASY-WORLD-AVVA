@@ -14,7 +14,6 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || `${API_BASE_URL}`;
 
 const Dashboard = () => {
   const navigate = useNavigate();

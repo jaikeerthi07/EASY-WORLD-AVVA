@@ -21,7 +21,6 @@ import {
   FaUserTie
 } from "react-icons/fa";
 
-const API_BASE_URL = `${API_BASE_URL}/api`;
 
 export default function Attendance() {
   const [activeTab, setActiveTab] = useState("scanner"); // scanner, dashboard, history, reports

@@ -20,7 +20,6 @@ const DiscountPage = () => {
   const inputRefs = useRef({});
 
   // API Base URL - change this to your backend URL
-  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Fetch ranges from backend on component mount
   useEffect(() => {

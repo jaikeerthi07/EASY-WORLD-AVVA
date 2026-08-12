@@ -14,7 +14,6 @@ import {
   FaRegFileAlt
 } from "react-icons/fa";
 
-const API_BASE_URL = `${API_BASE_URL}/api`;
 
 export default function Salary() {
   // Shared Data States

@@ -17,7 +17,6 @@ const UserTypeManager = () => {
   const [error, setError] = useState('');
 
   // API base URL - adjust according to your backend
-  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Fetch all user types on component mount
   useEffect(() => {

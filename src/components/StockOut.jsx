@@ -36,7 +36,6 @@ const BillItemsPage = () => {
   // Simple statistics - just count
   const [totalItems, setTotalItems] = useState(0);
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Load items on component mount
   useEffect(() => {

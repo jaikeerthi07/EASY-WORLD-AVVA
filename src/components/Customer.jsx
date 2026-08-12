@@ -3,7 +3,6 @@ import { API_BASE_URL } from '../config';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE_URL = `${API_BASE_URL}/api`;
 
 const CustomerDetailsPage = () => {
   const navigate = useNavigate();

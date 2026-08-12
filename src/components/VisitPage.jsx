@@ -107,7 +107,6 @@ const VisitBillPage = () => {
   });
   const [sortBy, setSortBy] = useState('newest');
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Create axios instance with credentials
   const api = axios.create({

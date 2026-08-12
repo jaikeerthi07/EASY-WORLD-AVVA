@@ -62,7 +62,6 @@ const EmployeeManager = () => {
     pan_attachment: null
   });
 
-  const API_BASE_URL = `${API_BASE_URL}/api`;
 
   // Fetch all employees, user types, and companies on component mount
   useEffect(() => {
