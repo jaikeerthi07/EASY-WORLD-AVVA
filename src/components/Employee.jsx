@@ -75,7 +75,7 @@ const EmployeeManager = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(`${API_BASE_URL}/employees`);
+      const response = await fetch(`${API_BASE_URL}/api/employees`);
       if (!response.ok) {
         throw new Error('Failed to fetch employees');
       }
@@ -250,11 +250,11 @@ const EmployeeManager = () => {
         formDataToSend.append('pan_attachment', panFile);
       }
       
-      let url = `${API_BASE_URL}/employees`;
+      let url = `${API_BASE_URL}/api/employees`;
       let method = 'POST';
       
       if (editingId) {
-        url = `${API_BASE_URL}/employees/${editingId}`;
+        url = `${API_BASE_URL}/api/employees/${editingId}`;
         method = 'PUT';
         if (formData.employee_id) {
           formDataToSend.append('employee_id', formData.employee_id);
@@ -340,7 +340,7 @@ const EmployeeManager = () => {
     
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/employees/${employeeToDelete}`, {
+      const response = await fetch(`${API_BASE_URL}/api/employees/${employeeToDelete}`, {
         method: 'DELETE',
       });
       

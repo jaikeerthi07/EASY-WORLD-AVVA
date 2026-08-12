@@ -40,7 +40,7 @@ const CustomerDetailsPage = () => {
       let hasMore = true;
       
       while (hasMore) {
-        const response = await fetch(`${API_BASE_URL}/billing/bills?page=${page}&per_page=100`);
+        const response = await fetch(`${API_BASE_URL}/api/billing/bills?page=${page}&per_page=100`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch bills');
@@ -156,7 +156,7 @@ const CustomerDetailsPage = () => {
       let hasMore = true;
       
       while (hasMore) {
-        const response = await fetch(`${API_BASE_URL}/billing/bills?page=${page}&per_page=100`);
+        const response = await fetch(`${API_BASE_URL}/api/billing/bills?page=${page}&per_page=100`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch bills');

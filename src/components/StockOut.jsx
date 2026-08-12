@@ -72,7 +72,7 @@ const BillItemsPage = () => {
     
     try {
       // First fetch all bills
-      const response = await axios.get(`${API_BASE_URL}/billing/bills`);
+      const response = await axios.get(`${API_BASE_URL}/api/billing/bills`);
       
       let billsData = [];
       if (response.data && Array.isArray(response.data.bills)) {
@@ -86,7 +86,7 @@ const BillItemsPage = () => {
       
       for (const bill of billsData) {
         try {
-          const detailResponse = await axios.get(`${API_BASE_URL}/billing/bills/${bill.id}`);
+          const detailResponse = await axios.get(`${API_BASE_URL}/api/billing/bills/${bill.id}`);
           const detailedBill = detailResponse.data;
           
           if (detailedBill.items && Array.isArray(detailedBill.items)) {
@@ -124,7 +124,7 @@ const BillItemsPage = () => {
 
   const fetchItemDetails = async (itemId, billId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/billing/bills/${billId}`);
+      const response = await axios.get(`${API_BASE_URL}/api/billing/bills/${billId}`);
       const bill = response.data;
       
       const item = bill.items?.find(i => i.id === itemId);

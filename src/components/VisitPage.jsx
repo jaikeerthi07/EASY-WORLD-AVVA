@@ -251,10 +251,10 @@ const VisitBillPage = () => {
     try {
       // Try different possible endpoints
       const endpoints = [
-        `${API_BASE_URL}/billing/bills`,
+        `${API_BASE_URL}/api/billing/bills`,
         `${API_BASE_URL}/bills`,
         `${API_BASE_URL}/visit-bills`,
-        `${API_BASE_URL}/billing/visit-bills`
+        `${API_BASE_URL}/api/billing/visit-bills`
       ];
       
       let response = null;
@@ -410,10 +410,10 @@ const VisitBillPage = () => {
       
       // Try different endpoints for single bill
       const endpoints = [
-        `${API_BASE_URL}/billing/bills/${billId}`,
+        `${API_BASE_URL}/api/billing/bills/${billId}`,
         `${API_BASE_URL}/bills/${billId}`,
         `${API_BASE_URL}/visit-bills/${billId}`,
-        `${API_BASE_URL}/billing/visit-bills/${billId}`
+        `${API_BASE_URL}/api/billing/visit-bills/${billId}`
       ];
       
       let response = null;
