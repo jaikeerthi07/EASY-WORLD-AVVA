@@ -1,9 +1,9 @@
+import { API_BASE_URL } from '../config';
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { FaSave, FaSyncAlt, FaShieldAlt, FaUserCog, FaPlus, FaTrashAlt, FaEdit, FaTimes } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { API_BASE_URL } from '../config';
 
 const ROLE_TEMPLATES = {
   admin: [

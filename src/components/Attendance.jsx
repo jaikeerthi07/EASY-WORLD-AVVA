@@ -1,9 +1,9 @@
+import { API_BASE_URL } from '../config';
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import { Html5Qrcode, Html5QrcodeSupportedFormats } from "html5-qrcode";
 import { 
-import { API_BASE_URL } from '../config';
   FaBarcode, 
   FaCheckCircle, 
   FaTimesCircle, 

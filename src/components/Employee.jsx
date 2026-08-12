@@ -1,6 +1,6 @@
+import { API_BASE_URL } from '../config';
 // EmployeeManager.js - Updated component with password field
 import React, { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../config';
 
 const EmployeeManager = () => {
   // State for employee list

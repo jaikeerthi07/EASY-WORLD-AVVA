@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../config';
 import React, { useState, useEffect } from "react";
 import {
   FaUsers,
@@ -12,7 +13,6 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from '../config';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || `${API_BASE_URL}`;
 

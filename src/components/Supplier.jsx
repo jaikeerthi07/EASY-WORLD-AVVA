@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { API_BASE_URL } from '../config';
+import React, { useState, useEffect } from 'react';
 
 const SupplierPage = () => {
   // State for current step (1: Supplier Details, 2: Add Items)

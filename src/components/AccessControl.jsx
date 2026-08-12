@@ -1,7 +1,7 @@
+import { API_BASE_URL } from '../config';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaShieldAlt, FaInfoCircle, FaCheckCircle, FaLock, FaEye, FaSave, FaSyncAlt, FaTrashAlt, FaUserShield } from "react-icons/fa";
-import { API_BASE_URL } from '../config';
 
 const AccessControl = () => {
   const [userTypeName, setUserTypeName] = useState("");

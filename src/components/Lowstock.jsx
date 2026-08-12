@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../config';
 // LowStockPage.jsx
 import React, { useEffect, useState } from "react";
 import { 
@@ -7,7 +8,6 @@ import {
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from '../config';
 
 const API_URL = `${API_BASE_URL}/api/products`;
 

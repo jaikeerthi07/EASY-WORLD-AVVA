@@ -1,7 +1,7 @@
+import { API_BASE_URL } from '../config';
 // Bill.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
 
 const Bill = () => {
   // State management

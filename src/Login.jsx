@@ -1,8 +1,8 @@
+import { API_BASE_URL } from './config';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import logo from "./assets/logo.jpeg";
-import { API_BASE_URL } from './config';
 
 const Login = () => {
   const navigate = useNavigate();
