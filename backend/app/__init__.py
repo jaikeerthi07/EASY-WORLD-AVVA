@@ -33,6 +33,34 @@ def create_app():
     # Import models so Flask-Migrate detects them
     from app import models
 
+    with app.app_context():
+        # Auto-create tables for Gunicorn production environments
+        db.create_all()
+        
+        # Inject default admin user if none exist
+        from app.models.employee import Employee
+        from app.models.usertype import UserType
+        from werkzeug.security import generate_password_hash
+        
+        try:
+            if not UserType.query.filter_by(name='admin').first():
+                db.session.add(UserType(name='admin', description='System Administrator', permissions='{}'))
+                db.session.commit()
+                
+            if not Employee.query.first():
+                admin = Employee(
+                    employee_id='EMP001',
+                    full_name='Admin',
+                    email='jaikeerthi156@gmail.com',
+                    password_hash=generate_password_hash('admin123'),
+                    user_type='admin',
+                    department='Management'
+                )
+                db.session.add(admin)
+                db.session.commit()
+        except:
+            pass
+
     # Auto-add new break columns to attendance table if missing
     with app.app_context():
         try:
