@@ -25,7 +25,7 @@ services:
     env: static
     plan: free
     buildCommand: "npm install && npm run build"
-    publishPath: build
+    staticPublishPath: ./build
     envVars:
       - key: REACT_APP_API_BASE_URL
         # Once your API deploys, replace this value with the actual API URL (e.g. https://inventory-api-xxxx.onrender.com)
