@@ -27,5 +27,7 @@ services:
     staticPublishPath: ./build
     envVars:
       - key: REACT_APP_API_BASE_URL
-        # Once your API deploys, replace this value with the actual API URL (e.g. https://inventory-api-xxxx.onrender.com)
-        value: "https://inventory-api.onrender.com"
+        fromService:
+          name: inventory-api
+          type: web
+          property: host
