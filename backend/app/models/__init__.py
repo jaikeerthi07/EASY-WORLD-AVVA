@@ -10,12 +10,16 @@ from app.models.service import Service, ServiceBillItem
 from app.models.supplier import Supplier, Item
 from app.models.usertype import UserType
 from app.models.enquiry import Enquiry
+from app.models.current_company import Company
+from app.models.payment import SupplierPayment
 
 __all__ = [
     'Attendance',
     'Bill',
     'BillItem',
     'Payment',
+    'SupplierPayment',
+    'Company',
     'DiscountRange',  
     'DiscountLog',    
     'Employee',
