@@ -3,14 +3,14 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import { Html5Qrcode, Html5QrcodeSupportedFormats } from "html5-qrcode";
-import { 
-  FaBarcode, 
-  FaCheckCircle, 
-  FaTimesCircle, 
-  FaFileExcel, 
-  FaPrint, 
-  FaChartBar, 
-  FaHistory, 
+import {
+  FaBarcode,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaFileExcel,
+  FaPrint,
+  FaChartBar,
+  FaHistory,
   FaPlusCircle,
   FaFileAlt,
   FaCamera,
@@ -24,12 +24,12 @@ import {
 
 export default function Attendance() {
   const [activeTab, setActiveTab] = useState("scanner"); // scanner, dashboard, history, reports
-  
+
   // Shared Data States
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
-  
+
   // Filters
   const [selectedEmployee, setSelectedEmployee] = useState("");
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
@@ -91,7 +91,7 @@ export default function Attendance() {
   // Axios instance
   const token = localStorage.getItem("token");
   const api = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: `${API_BASE_URL}/api`,
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : ""
@@ -207,8 +207,8 @@ export default function Attendance() {
       const html5Qrcode = new Html5Qrcode("camera-reader");
       html5QrcodeScannerRef.current = html5Qrcode;
 
-      const config = { 
-        fps: 25, 
+      const config = {
+        fps: 25,
         qrbox: (viewfinderWidth, viewfinderHeight) => {
           const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
           const boxSize = Math.max(180, Math.floor(minEdge * 0.85));
@@ -235,7 +235,7 @@ export default function Attendance() {
           (decodedText) => {
             if (decodedText) handleScanCode(decodedText);
           },
-          () => {}
+          () => { }
         );
         return;
       }
@@ -247,12 +247,12 @@ export default function Attendance() {
         (decodedText) => {
           if (decodedText) handleScanCode(decodedText);
         },
-        () => {}
+        () => { }
       );
     } catch (err) {
       console.error("Camera start failure:", err);
       const errStr = String(err).toLowerCase();
-      
+
       // Try secondary fallback to user facing camera
       try {
         if (html5QrcodeScannerRef.current) {
@@ -263,7 +263,7 @@ export default function Attendance() {
             (decodedText) => {
               if (decodedText) handleScanCode(decodedText);
             },
-            () => {}
+            () => { }
           );
           return;
         }
@@ -371,10 +371,10 @@ export default function Attendance() {
     try {
       const res = await api.post("/attendance/scan-barcode", { barcode: cleanCode });
       playBeep(false);
-      
+
       const isCheckOut = res.data.scan_action === "check_out";
       const isAlreadyDone = res.data.scan_action === "already_completed";
-      
+
       const resultObj = {
         success: true,
         message: res.data.message,
@@ -391,8 +391,8 @@ export default function Attendance() {
         isAlreadyDone
           ? `⚠️ ${res.data.message}`
           : isCheckOut
-          ? `👋 Check-Out Successful for ${res.data.employee?.full_name}`
-          : `✅ Check-In Successful for ${res.data.employee?.full_name}`
+            ? `👋 Check-Out Successful for ${res.data.employee?.full_name}`
+            : `✅ Check-In Successful for ${res.data.employee?.full_name}`
       );
       setScannedBarcode("");
       fetchAttendanceRecords();
@@ -533,7 +533,7 @@ export default function Attendance() {
       {activeTab === "scanner" && (
         <div style={styles.contentCard}>
           <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto", padding: "10px 0" }}>
-            
+
             {/* Camera Toggle Control */}
             <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
               {!isCameraActive ? (
@@ -592,7 +592,7 @@ export default function Attendance() {
                 backgroundColor: "#000"
               }}>
                 <div id="camera-reader" style={{ width: "100%" }}></div>
-                
+
                 {/* Visual Target Frame Overlay */}
                 <div style={{
                   position: "absolute",
@@ -622,7 +622,7 @@ export default function Attendance() {
                     }}></div>
                   </div>
                 </div>
-                
+
                 <div style={{
                   backgroundColor: "rgba(15, 23, 42, 0.9)",
                   color: "#38bdf8",
@@ -708,7 +708,7 @@ export default function Attendance() {
                     <div><span style={{ color: "#94a3b8" }}>Employee ID:</span> <strong>{scanResult.employee.employee_id}</strong></div>
                     <div><span style={{ color: "#94a3b8" }}>Department:</span> <strong>{scanResult.employee.department || "N/A"}</strong></div>
                     <div><span style={{ color: "#94a3b8" }}>Designation:</span> <strong>{scanResult.employee.designation || "N/A"}</strong></div>
-                    
+
                     {scanResult.data?.check_in_time && (
                       <div><span style={{ color: "#94a3b8" }}>Entry Time (Check-In):</span> <strong style={{ color: "#34d399", fontSize: "15px" }}>{new Date(scanResult.data.check_in_time).toLocaleTimeString()}</strong></div>
                     )}
@@ -717,7 +717,7 @@ export default function Attendance() {
                     ) : (
                       <div><span style={{ color: "#94a3b8" }}>Exit Time:</span> <span style={{ color: "#fbbf24", fontStyle: "italic" }}>Currently On Duty</span></div>
                     )}
-                    
+
                     {scanResult.data?.total_hours > 0 && (
                       <div style={{ gridColumn: "span 2", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "8px", marginTop: "4px" }}>
                         <span style={{ color: "#94a3b8" }}>Total Working Hours:</span> <strong style={{ color: "#f472b6", fontSize: "16px" }}>{scanResult.data.total_hours} Hours</strong>
@@ -1089,31 +1089,29 @@ export default function Attendance() {
       {/* Real-time Scan Result Popup Modal */}
       {popupResult && (
         <div style={styles.modalOverlay} onClick={closePopupAndResetScanner}>
-          <div 
+          <div
             style={{
               ...styles.modalContent,
               maxWidth: "500px",
-              border: `3px solid ${
-                popupResult.scan_action === "check_out" ? "#3b82f6" :
-                popupResult.scan_action?.startsWith("break") ? "#06b6d4" :
-                popupResult.scan_action === "already_completed" ? "#eab308" :
-                popupResult.success ? "#10b981" : "#ef4444"
-              }`,
-              boxShadow: `0 20px 50px ${
-                popupResult.scan_action === "check_out" ? "rgba(59, 130, 246, 0.4)" :
-                popupResult.scan_action?.startsWith("break") ? "rgba(6, 182, 212, 0.4)" :
-                popupResult.scan_action === "already_completed" ? "rgba(234, 179, 8, 0.4)" :
-                popupResult.success ? "rgba(16, 185, 129, 0.4)" : "rgba(239, 68, 68, 0.4)"
-              }`
-            }} 
+              border: `3px solid ${popupResult.scan_action === "check_out" ? "#3b82f6" :
+                  popupResult.scan_action?.startsWith("break") ? "#06b6d4" :
+                    popupResult.scan_action === "already_completed" ? "#eab308" :
+                      popupResult.success ? "#10b981" : "#ef4444"
+                }`,
+              boxShadow: `0 20px 50px ${popupResult.scan_action === "check_out" ? "rgba(59, 130, 246, 0.4)" :
+                  popupResult.scan_action?.startsWith("break") ? "rgba(6, 182, 212, 0.4)" :
+                    popupResult.scan_action === "already_completed" ? "rgba(234, 179, 8, 0.4)" :
+                      popupResult.success ? "rgba(16, 185, 129, 0.4)" : "rgba(239, 68, 68, 0.4)"
+                }`
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div style={{
               backgroundColor: popupResult.scan_action === "check_out" ? "#1e3a8a" :
                 popupResult.scan_action?.startsWith("break") ? "#164e63" :
-                popupResult.scan_action === "already_completed" ? "#713f12" :
-                popupResult.success ? "#064e3b" : "#7f1d1d",
+                  popupResult.scan_action === "already_completed" ? "#713f12" :
+                    popupResult.success ? "#064e3b" : "#7f1d1d",
               padding: "24px 24px 18px 24px",
               textAlign: "center",
               borderBottom: "1px solid rgba(255,255,255,0.1)"
@@ -1349,9 +1347,9 @@ export default function Attendance() {
 
                     {/* High Definition QR Code */}
                     <div style={{ backgroundColor: "#ffffff", padding: "4px", borderRadius: "6px", flexShrink: 0 }}>
-                      <img 
+                      <img
                         src={`https://api.qrserver.com/v1/create-qr-code/?size=55x55&data=${encodeURIComponent(currentCardEmp.employee_id || currentCardEmp.id)}`}
-                        alt="QR Code" 
+                        alt="QR Code"
                         style={{ width: "50px", height: "50px", display: "block" }}
                       />
                     </div>
@@ -1359,9 +1357,9 @@ export default function Attendance() {
 
                   {/* Barcode Footer */}
                   <div style={{ backgroundColor: "#ffffff", padding: "5px 8px", borderRadius: "6px", textAlign: "center" }}>
-                    <img 
+                    <img
                       src={`https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(currentCardEmp.employee_id || currentCardEmp.id)}&scale=2&height=10&alttext=0`}
-                      alt="Barcode" 
+                      alt="Barcode"
                       style={{ height: "22px", maxWidth: "100%", display: "block", margin: "0 auto" }}
                       onError={(e) => {
                         e.target.style.display = "none";
@@ -1378,8 +1376,8 @@ export default function Attendance() {
                 <button type="button" onClick={() => setShowIdCardModal(false)} style={styles.secondaryButton}>
                   Close
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => {
                     const printContent = document.getElementById("printable-id-card").outerHTML;
                     const win = window.open("", "_blank");
@@ -1399,7 +1397,7 @@ export default function Attendance() {
                       </html>
                     `);
                     win.document.close();
-                  }} 
+                  }}
                   style={styles.primaryButton}
                 >
                   <FaPrint style={{ marginRight: "6px" }} /> Print ID Card
