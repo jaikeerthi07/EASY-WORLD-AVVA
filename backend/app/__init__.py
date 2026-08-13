@@ -44,7 +44,7 @@ def create_app():
         
         try:
             if not UserType.query.filter_by(name='admin').first():
-                db.session.add(UserType(name='admin', description='System Administrator', permissions='{}'))
+                db.session.add(UserType(name='admin', permissions='{}'))
                 db.session.commit()
                 
             if not Employee.query.first():
