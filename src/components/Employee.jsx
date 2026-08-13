@@ -10,18 +10,18 @@ const EmployeeManager = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState(null);
-  
+
   // Modal states
   const [showFormModal, setShowFormModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [employeeToDelete, setEmployeeToDelete] = useState(null);
-  
+
   // Password visibility states
   const [showPassword, setShowPassword] = useState(false);
   const [showEditPassword, setShowEditPassword] = useState(false);
-  
+
   // Form state
   const [formData, setFormData] = useState({
     employee_id: '',
@@ -53,7 +53,7 @@ const EmployeeManager = () => {
     setIdCardEmployee(employee);
     setShowIdCardModal(true);
   };
-  
+
   // File upload state
   const [aadharFile, setAadharFile] = useState(null);
   const [panFile, setPanFile] = useState(null);
@@ -99,7 +99,7 @@ const EmployeeManager = () => {
       const data = await response.json();
       const userTypeNames = data.map(item => item.name);
       setUserTypes(userTypeNames);
-      
+
       if (userTypeNames.length > 0 && !formData.user_type) {
         setFormData(prev => ({ ...prev, user_type: userTypeNames[0] }));
       }
@@ -117,13 +117,13 @@ const EmployeeManager = () => {
     try {
       console.log('Fetching companies from:', `${API_BASE_URL}/companies/list`);
       const response = await fetch(`${API_BASE_URL}/companies/list`);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Companies API error:', errorText);
         throw new Error(`Failed to fetch companies: ${response.status}`);
       }
-      
+
       const data = await response.json();
       console.log('Companies loaded:', data);
       setCompanies(data);
@@ -140,7 +140,7 @@ const EmployeeManager = () => {
       ...prev,
       [name]: value
     }));
-    
+
     if (name === 'company_id') {
       const selectedCompany = companies.find(c => c.id.toString() === value);
       if (selectedCompany) {
@@ -220,12 +220,12 @@ const EmployeeManager = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.full_name || !formData.email || !formData.user_type) {
       alert('Please fill in all required fields (Full Name, Email, and User Type)');
       return;
     }
-    
+
     // Only require password for new employees
     if (!editingId && !formData.password) {
       alert('Please enter a password for the new employee');
@@ -233,26 +233,26 @@ const EmployeeManager = () => {
     }
 
     setLoading(true);
-    
+
     try {
       const formDataToSend = new FormData();
-      
+
       Object.keys(formData).forEach(key => {
         if (formData[key] && key !== 'employee_id') {
           formDataToSend.append(key, formData[key]);
         }
       });
-      
+
       if (aadharFile) {
         formDataToSend.append('aadhar_attachment', aadharFile);
       }
       if (panFile) {
         formDataToSend.append('pan_attachment', panFile);
       }
-      
+
       let url = `${API_BASE_URL}/api/employees`;
       let method = 'POST';
-      
+
       if (editingId) {
         url = `${API_BASE_URL}/api/employees/${editingId}`;
         method = 'PUT';
@@ -260,29 +260,29 @@ const EmployeeManager = () => {
           formDataToSend.append('employee_id', formData.employee_id);
         }
       }
-      
+
       const response = await fetch(url, {
         method: method,
         body: formDataToSend
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to save employee');
       }
-      
+
       const savedEmployee = await response.json();
-      
+
       if (editingId) {
         setEmployees(employees.map(emp => emp.id === editingId ? savedEmployee : emp));
       } else {
         setEmployees([savedEmployee, ...employees]);
       }
-      
+
       resetForm();
       setShowFormModal(false);
       alert(`Employee ${editingId ? 'updated' : 'added'} successfully!`);
-      
+
     } catch (err) {
       alert('Error: ' + err.message);
       console.error('Save error:', err);
@@ -337,25 +337,25 @@ const EmployeeManager = () => {
   // Delete employee
   const deleteEmployee = async () => {
     if (!employeeToDelete) return;
-    
+
     setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/api/employees/${employeeToDelete}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to delete employee');
       }
-      
+
       setEmployees(employees.filter(emp => emp.id !== employeeToDelete));
       alert('Employee deleted successfully!');
-      
+
       if (editingId === employeeToDelete) {
         resetForm();
       }
-      
+
       setShowDeleteConfirm(false);
       setEmployeeToDelete(null);
     } catch (err) {
@@ -369,13 +369,13 @@ const EmployeeManager = () => {
   // Download attachment
   const downloadAttachment = async (filename, type) => {
     if (!filename) return;
-    
+
     try {
       const response = await fetch(`${API_BASE_URL}/download/${filename}`);
       if (!response.ok) {
         throw new Error('File not found');
       }
-      
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -385,7 +385,7 @@ const EmployeeManager = () => {
       link.click();
       link.remove();
       window.URL.revokeObjectURL(url);
-      
+
     } catch (err) {
       console.error('Download error:', err);
       alert(`Error downloading ${type} document: ${err.message}`);
@@ -423,14 +423,14 @@ const EmployeeManager = () => {
             + Add New Employee
           </button>
         </div>
-        
+
         {error && (
           <div style={styles.errorMessage}>
             {error}
             <button onClick={() => setError('')} style={styles.closeButton}>×</button>
           </div>
         )}
-        
+
         <div style={styles.tableContainer}>
           <h2 style={styles.subtitle}>Employee List</h2>
           {loading && employees.length === 0 ? (
@@ -501,25 +501,25 @@ const EmployeeManager = () => {
                         <div style={styles.actionButtons}>
                           <button
                             onClick={() => viewEmployee(employee)}
-                            style={{...styles.actionButton, ...styles.viewButton}}
+                            style={{ ...styles.actionButton, ...styles.viewButton }}
                           >
                             View
                           </button>
                           <button
                             onClick={() => openIdCard(employee)}
-                            style={{...styles.actionButton, backgroundColor: '#8b5cf6', color: 'white'}}
+                            style={{ ...styles.actionButton, backgroundColor: '#8b5cf6', color: 'white' }}
                           >
                             🪪 ID Card
                           </button>
                           <button
                             onClick={() => editEmployee(employee)}
-                            style={{...styles.actionButton, ...styles.editButton}}
+                            style={{ ...styles.actionButton, ...styles.editButton }}
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => confirmDelete(employee.id)}
-                            style={{...styles.actionButton, ...styles.deleteButton}}
+                            style={{ ...styles.actionButton, ...styles.deleteButton }}
                           >
                             Delete
                           </button>
@@ -550,7 +550,7 @@ const EmployeeManager = () => {
                   {/* Personal Information */}
                   <div style={styles.formSection}>
                     <h3 style={styles.sectionTitle}>Personal Information</h3>
-                    
+
                     {editingId && (
                       <div style={styles.formGroup}>
                         <label style={styles.label}>Employee ID</label>
@@ -563,7 +563,7 @@ const EmployeeManager = () => {
                         />
                       </div>
                     )}
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Full Name *</label>
                       <input
@@ -576,7 +576,7 @@ const EmployeeManager = () => {
                         placeholder="John Doe"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Email *</label>
                       <input
@@ -589,7 +589,7 @@ const EmployeeManager = () => {
                         placeholder="john.doe@company.com"
                       />
                     </div>
-                    
+
                     {/* Password Field with Eye Icon */}
                     <div style={styles.formGroup}>
                       <label style={styles.label}>
@@ -613,7 +613,7 @@ const EmployeeManager = () => {
                         </button>
                       </div>
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Phone Number</label>
                       <input
@@ -625,7 +625,7 @@ const EmployeeManager = () => {
                         placeholder="+91 9876543210"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Date of Joining</label>
                       <input
@@ -636,7 +636,7 @@ const EmployeeManager = () => {
                         style={styles.input}
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Blood Group</label>
                       <select
@@ -656,7 +656,7 @@ const EmployeeManager = () => {
                         <option value="O-">O-</option>
                       </select>
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Marital Status</label>
                       <select
@@ -673,11 +673,11 @@ const EmployeeManager = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   {/* Employment Details */}
                   <div style={styles.formSection}>
                     <h3 style={styles.sectionTitle}>Employment Details</h3>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>User Type *</label>
                       <select
@@ -695,7 +695,7 @@ const EmployeeManager = () => {
                         ))}
                       </select>
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Department</label>
                       <input
@@ -707,7 +707,7 @@ const EmployeeManager = () => {
                         placeholder="Engineering, HR, Sales, etc."
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Designation</label>
                       <input
@@ -732,7 +732,7 @@ const EmployeeManager = () => {
                         step="0.01"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Barcode / QR Code</label>
                       <input
@@ -744,7 +744,7 @@ const EmployeeManager = () => {
                         placeholder="Auto-generated if empty (e.g. EMP-BAR-1001)"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Current Company</label>
                       <select
@@ -766,11 +766,11 @@ const EmployeeManager = () => {
                         name="current_company"
                         value={formData.current_company}
                         onChange={handleCompanyNameChange}
-                        style={{...styles.input, marginTop: '8px'}}
+                        style={{ ...styles.input, marginTop: '8px' }}
                         placeholder="Enter company name manually"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Address</label>
                       <textarea
@@ -782,7 +782,7 @@ const EmployeeManager = () => {
                         placeholder="Full address"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Emergency Contact</label>
                       <input
@@ -795,11 +795,11 @@ const EmployeeManager = () => {
                       />
                     </div>
                   </div>
-                  
+
                   {/* Document Details */}
                   <div style={styles.formSection}>
                     <h3 style={styles.sectionTitle}>Document Details</h3>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Aadhar Card Number</label>
                       <input
@@ -811,7 +811,7 @@ const EmployeeManager = () => {
                         placeholder="XXXX-XXXX-XXXX"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>Aadhar Card Attachment</label>
                       <input
@@ -833,7 +833,7 @@ const EmployeeManager = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>PAN Card Number</label>
                       <input
@@ -845,7 +845,7 @@ const EmployeeManager = () => {
                         placeholder="ABCDE1234F"
                       />
                     </div>
-                    
+
                     <div style={styles.formGroup}>
                       <label style={styles.label}>PAN Card Attachment</label>
                       <input
@@ -1030,55 +1030,46 @@ const EmployeeManager = () => {
       {/* Employee ID Card Printable Modal */}
       {showIdCardModal && idCardEmployee && (
         <div style={styles.modalOverlay} onClick={() => setShowIdCardModal(false)}>
-          <div style={{...styles.modal, maxWidth: '480px', backgroundColor: '#0f172a', padding: '0', borderRadius: '16px', overflow: 'hidden'}} onClick={(e) => e.stopPropagation()}>
-            <div style={{background: 'linear-gradient(135deg, #1e293b, #3b82f6)', padding: '20px', textAlign: 'center', color: '#fff', position: 'relative'}}>
-              <button onClick={() => setShowIdCardModal(false)} style={{position: 'absolute', right: '15px', top: '15px', background: 'none', border: 'none', color: '#fff', fontSize: '24px', cursor: 'pointer'}}>×</button>
-              <div style={{fontSize: '20px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase'}}>EAZYWORLD</div>
-              <div style={{fontSize: '12px', opacity: 0.8, marginTop: '2px'}}>EMPLOYEE IDENTIFICATION CARD</div>
+          <div style={{ ...styles.modal, maxWidth: '480px', backgroundColor: '#0f172a', padding: '0', borderRadius: '16px', overflow: 'hidden' }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ background: 'linear-gradient(135deg, #1e293b, #3b82f6)', padding: '20px', textAlign: 'center', color: '#fff', position: 'relative' }}>
+              <button onClick={() => setShowIdCardModal(false)} style={{ position: 'absolute', right: '15px', top: '15px', background: 'none', border: 'none', color: '#fff', fontSize: '24px', cursor: 'pointer' }}>×</button>
+              <div style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase' }}>EAZYWORLD</div>
+              <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '2px' }}>EMPLOYEE IDENTIFICATION CARD</div>
             </div>
-            
-            <div style={{padding: '24px', textAlign: 'center', backgroundColor: '#0f172a', color: '#fff'}}>
-              <div style={{width: '90px', height: '90px', borderRadius: '50%', backgroundColor: '#3b82f6', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '36px', fontWeight: 'bold', margin: '0 auto 16px auto', border: '4px solid #1e293b', boxShadow: '0 4px 12px rgba(0,0,0,0.4)'}}>
+
+            <div style={{ padding: '24px', textAlign: 'center', backgroundColor: '#0f172a', color: '#fff' }}>
+              <div style={{ width: '90px', height: '90px', borderRadius: '50%', backgroundColor: '#3b82f6', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '36px', fontWeight: 'bold', margin: '0 auto 16px auto', border: '4px solid #1e293b', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}>
                 {idCardEmployee.full_name?.charAt(0).toUpperCase()}
               </div>
-              <h2 style={{fontSize: '22px', fontWeight: '700', margin: '0 0 4px 0', color: '#f8fafc'}}>{idCardEmployee.full_name}</h2>
-              <div style={{fontSize: '14px', color: '#38bdf8', fontWeight: '600', marginBottom: '12px'}}>{idCardEmployee.designation || 'Staff Member'}</div>
-              
-              <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', backgroundColor: '#1e293b', padding: '12px 16px', borderRadius: '10px', fontSize: '13px', textAlign: 'left', marginBottom: '20px', border: '1px solid #334155'}}>
-                <div><span style={{color: '#94a3b8'}}>Emp ID:</span> <strong style={{color: '#f8fafc'}}>{idCardEmployee.employee_id}</strong></div>
-                <div><span style={{color: '#94a3b8'}}>Dept:</span> <strong style={{color: '#f8fafc'}}>{idCardEmployee.department || 'N/A'}</strong></div>
-                <div><span style={{color: '#94a3b8'}}>Blood:</span> <strong style={{color: '#f8fafc'}}>{idCardEmployee.blood_group || 'N/A'}</strong></div>
-                <div><span style={{color: '#94a3b8'}}>Phone:</span> <strong style={{color: '#f8fafc'}}>{idCardEmployee.phone_number || 'N/A'}</strong></div>
+              <h2 style={{ fontSize: '22px', fontWeight: '700', margin: '0 0 4px 0', color: '#f8fafc' }}>{idCardEmployee.full_name}</h2>
+              <div style={{ fontSize: '14px', color: '#38bdf8', fontWeight: '600', marginBottom: '12px' }}>{idCardEmployee.designation || 'Staff Member'}</div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', backgroundColor: '#1e293b', padding: '12px 16px', borderRadius: '10px', fontSize: '13px', textAlign: 'left', marginBottom: '20px', border: '1px solid #334155' }}>
+                <div><span style={{ color: '#94a3b8' }}>Emp ID:</span> <strong style={{ color: '#f8fafc' }}>{idCardEmployee.employee_id}</strong></div>
+                <div><span style={{ color: '#94a3b8' }}>Dept:</span> <strong style={{ color: '#f8fafc' }}>{idCardEmployee.department || 'N/A'}</strong></div>
+                <div><span style={{ color: '#94a3b8' }}>Blood:</span> <strong style={{ color: '#f8fafc' }}>{idCardEmployee.blood_group || 'N/A'}</strong></div>
+                <div><span style={{ color: '#94a3b8' }}>Phone:</span> <strong style={{ color: '#f8fafc' }}>{idCardEmployee.phone_number || 'N/A'}</strong></div>
               </div>
-              
+
               {/* Printable Barcode rendering box */}
-              <div style={{backgroundColor: '#ffffff', padding: '14px', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.3)', margin: '0 auto', maxWidth: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                {/* SVG styled barcode bars */}
-                <svg width="220" height="50" viewBox="0 0 220 50">
-                  <rect x="0" y="0" width="220" height="50" fill="#ffffff" />
-                  <g fill="#000000">
-                    <rect x="10" y="5" width="3" height="40" /><rect x="16" y="5" width="2" height="40" /><rect x="22" y="5" width="6" height="40" />
-                    <rect x="32" y="5" width="2" height="40" /><rect x="38" y="5" width="4" height="40" /><rect x="46" y="5" width="2" height="40" />
-                    <rect x="52" y="5" width="8" height="40" /><rect x="64" y="5" width="3" height="40" /><rect x="70" y="5" width="2" height="40" />
-                    <rect x="76" y="5" width="5" height="40" /><rect x="85" y="5" width="2" height="40" /><rect x="90" y="5" width="4" height="40" />
-                    <rect x="98" y="5" width="6" height="40" /><rect x="108" y="5" width="2" height="40" /><rect x="114" y="5" width="3" height="40" />
-                    <rect x="120" y="5" width="5" height="40" /><rect x="128" y="5" width="2" height="40" /><rect x="134" y="5" width="4" height="40" />
-                    <rect x="142" y="5" width="6" height="40" /><rect x="152" y="5" width="2" height="40" /><rect x="158" y="5" width="3" height="40" />
-                    <rect x="165" y="5" width="4" height="40" /><rect x="172" y="5" width="2" height="40" /><rect x="178" y="5" width="6" height="40" />
-                    <rect x="188" y="5" width="2" height="40" /><rect x="194" y="5" width="5" height="40" /><rect x="204" y="5" width="3" height="40" />
-                  </g>
-                </svg>
-                <div style={{fontSize: '13px', fontWeight: 'bold', color: '#0f172a', fontFamily: 'monospace', letterSpacing: '2px', marginTop: '4px'}}>
+              <div style={{ backgroundColor: '#ffffff', padding: '14px', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.3)', margin: '0 auto', maxWidth: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <img
+                  src={`https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(idCardEmployee.barcode || idCardEmployee.employee_id || idCardEmployee.id)}&scale=2&height=10&alttext=0`}
+                  alt="Real Barcode"
+                  style={{ height: "40px", maxWidth: "100%", display: "block", margin: "0 auto" }}
+                  onError={(e) => { e.target.style.display = "none"; }}
+                />
+                <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#0f172a', fontFamily: 'monospace', letterSpacing: '2px', marginTop: '4px' }}>
                   {idCardEmployee.barcode || `EMP-BAR-${idCardEmployee.employee_id}`}
                 </div>
               </div>
             </div>
-            
-            <div style={{padding: '16px 24px', backgroundColor: '#1e293b', borderTop: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-              <span style={{fontSize: '12px', color: '#94a3b8'}}>Official Employee ID</span>
+
+            <div style={{ padding: '16px 24px', backgroundColor: '#1e293b', borderTop: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '12px', color: '#94a3b8' }}>Official Employee ID</span>
               <button
                 onClick={() => window.print()}
-                style={{padding: '8px 20px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px'}}
+                style={{ padding: '8px 20px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
               >
                 🖨️ Print ID Card
               </button>
