@@ -11,6 +11,7 @@ services:
     plan: free
     buildCommand: "cd backend && pip install -r requirements.txt"
     startCommand: "cd backend && gunicorn run:app --bind 0.0.0.0:$PORT"
+    healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
