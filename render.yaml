@@ -1,9 +1,9 @@
-services:
+databases:
   # 1) Postgres Database (Free Tier Eligible)
-  - type: pgo
-    name: inventory-db
+  - name: inventory-db
     plan: free
 
+services:
   # 2) Flask Backend
   - type: web
     name: inventory-api
