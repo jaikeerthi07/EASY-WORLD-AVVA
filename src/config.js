@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://lyrics-span-annotated-miller.trycloudflare.com";
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://inventory-api.onrender.com";
